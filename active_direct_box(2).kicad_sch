@@ -1,0 +1,71 @@
+(kicad_sch (version 20211014) (generator pcbnew 6.0)
+  (paper A4)
+  (title "Active Direct Box - NE5532 + OEP Z1604")
+
+  ; Power symbols
+  (symbol (lib_id power:+12V) (at 10 10) (unit 1) (value "+12V") (footprint "") )
+  (symbol (lib_id power:-12V) (at 10 30) (unit 1) (value "-12V") (footprint "") )
+  (symbol (lib_id power:GND) (at 10 50) (unit 1) (value "GND") (footprint "") )
+
+  ; Connectors
+  (symbol (lib_id Connector:Conn_01x02) (at 30 120) (unit 1) (value "IN_TS") (footprint "Connector:Jack_TipSleeve") (fields (field (name Reference) (value J1))))
+  (symbol (lib_id Connector:Conn_01x03) (at 220 120) (unit 1) (value "PHONE_OUT") (footprint "Connector:Jack_TipSleeve") (fields (field (name Reference) (value J2))))
+  (symbol (lib_id Connector:XLR) (at 420 120) (unit 1) (value "XLR_OUT") (footprint "Connector:XLR_3") (fields (field (name Reference) (value J3))))
+
+  ; Power input jack
+  (symbol (lib_id Connector:BarrelJack) (at 30 30) (unit 1) (value "DC24V_IN") (footprint "Connector:DC_Jack") (fields (field (name Reference) (value J4))))
+
+  ; NE5532 (dual op amp)
+  (symbol (lib_id Device:NE5532_DIP8) (at 160 220) (unit 1) (value "U1A") (footprint "DIP-8"))
+  (symbol (lib_id Device:NE5532_DIP8) (at 160 320) (unit 2) (value "U1B") (footprint "DIP-8"))
+
+  ; Passive components and control
+  (symbol (lib_id Device:R) (at 100 260) (unit 1) (value "R1
+1M") (footprint "Resistor_SMD:R_1206") )
+  (symbol (lib_id Device:C) (at 70 220) (unit 1) (value "C1
+4.7uF") (footprint "Capacitor_SMD:C_1206") )
+
+  (symbol (lib_id Device:R) (at 220 420) (unit 1) (value "R2
+10k") (footprint "Resistor_SMD:R_1206") )
+  (symbol (lib_id Device:R) (at 180 420) (unit 1) (value "R3
+4.3k") (footprint "Resistor_SMD:R_1206") )
+  (symbol (lib_id Device:Potentiometer) (at 260 420) (unit 1) (value "P1
+100k_A") (footprint "Potentiometer_SMD") )
+
+  (symbol (lib_id Device:C) (at 320 420) (unit 1) (value "C2
+220uF") (footprint "Capacitor_Electrolytic:Cap_Elec_8x11") )
+  (symbol (lib_id Device:R) (at 300 440) (unit 1) (value "R4
+150") (footprint "Resistor_SMD:R_1206") )
+  (symbol (lib_id Device:C) (at 480 220) (unit 1) (value "C3
+220uF") (footprint "Capacitor_Electrolytic:Cap_Elec_8x11") )
+
+  ; Transformer
+  (symbol (lib_id Device:Transformer) (at 400 320) (unit 1) (value "T1
+OEP_Z1604") (footprint "Transformer_SMD") )
+
+  ; Soft clip network
+  (symbol (lib_id Device:Sswitch) (at 300 360) (unit 1) (value "SW1
+CLIP") (footprint "Switch_SPDT") )
+  (symbol (lib_id Device:R) (at 280 360) (unit 1) (value "R5
+330") (footprint "Resistor_SMD:R_1206") )
+  (symbol (lib_id Device:D) (at 300 340) (unit 1) (value "D1
+1N4148") (footprint "Diode_SMD:D_1206") )
+  (symbol (lib_id Device:D) (at 320 340) (unit 1) (value "D2
+1N4148") (footprint "Diode_SMD:D_1206") )
+
+  ; Power conversion module placeholder (24V -> +-12V)
+  (symbol (lib_id Module:DC_DC) (at 60 60) (unit 1) (value "DC_DC
+24V_to_+-12V") (footprint "Module_DCDC") )
+
+  ; Net labels and wiring notes (for importer)
+  (comment (at 20 520) (size 1) "Net TODOs:")
+  (comment (at 20 540) (size 1) "- Wire J1 tip -> C1 -> U1A non-inverting input. U1A configured as voltage follower.")
+  (comment (at 20 560) (size 1) "- U1A output -> coupling cap C_in? -> U1B non-inverting input via DC bias to mid-rail (0V).")
+  (comment (at 20 580) (size 1) "- U1B: non-inverting amp. R2=10k to GND from - input. R3+P1 forms feedback from output to - input.")
+  (comment (at 20 600) (size 1) "- U1B output -> (optional soft-clip via SW1+R5+D1/D2) -> R4 -> C2 -> T1 primary.")
+  (comment (at 20 620) (size 1) "- T1 secondary -> XLR pins: secA->XLR pin2, secB->XLR pin3. XLR pin1 -> chassis ground (GND_LIFT optional).")
+  (comment (at 20 640) (size 1) "- PHONE_OUT: taken from U1B output through C3. For 600Ω phone out, use transformer secondary unbalanced tap (wire per mechanical choice).")
+
+  ; Footprints: adjust in KiCad when importing and assign proper library symbols/pins.
+  ; End of schematic
+)
